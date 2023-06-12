@@ -31,15 +31,25 @@ document.addEventListener("keydown", direction);
 let dir;
 
 function direction(event) {
-	if (event.keyCode == 37 && dir != "right") {
+	if (event.keyCode == 65 && dir != "right") {
 		dir = "left";
-	} else if (event.keyCode == 38 && dir != "down") {
+	} else if (event.keyCode == 87 && dir != "down") {
 		dir = "up";
-	} else if (event.keyCode == 39 && dir != "left") {
+	} else if (event.keyCode == 68 && dir != "left") {
 		dir = "right";
-	} else if (event.keyCode == 40 && dir != "up") {
+	} else if (event.keyCode == 83 && dir != "up") {
 		dir = "down";
 	}
+
+}
+
+function eatTail(head, arr) {
+	for (let i = 0; i < arr.length; i++) {
+		if (head.x == arr[i].x && head.y == arr[i].y) {
+			clearInterval(game);
+		}
+	}
+
 
 }
 
@@ -49,7 +59,7 @@ function drawGame() {
 	ctx.drawImage(foodImg, food.x, food.y);
 
 	for (let i = 0; i < snake.length; i++) {
-		ctx.fillStyle = "green";
+		ctx.fillStyle = i == 0 ? "green" : "red";
 		ctx.fillRect(snake[i].x, snake[i].y, box, box)
 
 	}
@@ -61,7 +71,21 @@ function drawGame() {
 	let snakeX = snake[0].x;
 	let snakeY = snake[0].y;
 
-	snake.pop();
+
+	if (snakeX == food.x && snakeY == food.y) {
+		score++;
+
+		food = {
+			x: Math.floor((Math.random() * 17 + 1)) * box,
+			y: Math.floor((Math.random() * 15 + 3)) * box,
+		};
+	} else {
+		snake.pop();
+	}
+
+	if (snakeX < box || snakeX > box * 17 || snakeY < 3 * box || snakeY > box * 17) {
+		clearInterval(game);
+	}
 
 
 	if (dir == "left") snakeX -= box;
@@ -69,12 +93,14 @@ function drawGame() {
 	if (dir == "up") snakeY -= box;
 	if (dir == "down") snakeY += box;
 
-	// let newHead = {
-	// 	x: snakeX,
-	// 	y: snakeY,
-	// }
+	let newHead = {
+		x: snakeX,
+		y: snakeY,
+	}
 
-	snake.unshift(newHead)
+	eatTail(newHead, snake);
+
+	snake.unshift(newHead);
 }
 
 let game = setInterval(drawGame, 100);
