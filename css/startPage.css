@@ -1,0 +1,33 @@
+canvas {
+	display: block;
+	margin: 0 auto;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.leader-board-box {
+	width: -moz-fit-content;
+	width: fit-content;
+	height: -moz-fit-content;
+	height: fit-content;
+	padding: 10px;
+	margin: 10px;
+	background-color: #aad751;
+	border: 10px solid #578a34;
+}
+
+.leader-board {
+	font-family: Arial, Helvetica, sans-serif;
+	color: #ae6117;
+	text-shadow: 1px 1px 10px #f88312;
+	text-transform: uppercase;
+	text-decoration: none;
+	font-size: larger;
+	text-align: center;
+	font-weight: 700;
+}

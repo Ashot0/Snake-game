@@ -1,5 +1,4 @@
 
-
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext("2d");
 
@@ -11,24 +10,25 @@ const foodImg = new Image();
 foodImg.src = "img/food.png";
 
 let box = 32;
-
 let score = 0;
-
-
+let life = true;
 let food = {
 	x: Math.floor((Math.random() * 17 + 1)) * box,
 	y: Math.floor((Math.random() * 15 + 3)) * box,
 }
-
 let snake = [];
 snake[0] = {
 	x: 9 * box,
 	y: 10 * box,
 }
-
 document.addEventListener("keydown", direction);
-
 let dir;
+
+
+let userName = prompt("Enter you name:", "Молодой");
+
+
+
 
 function direction(event) {
 	if (event.keyCode == 65 && dir != "right") {
@@ -40,17 +40,15 @@ function direction(event) {
 	} else if (event.keyCode == 83 && dir != "up") {
 		dir = "down";
 	}
-
 }
 
 function eatTail(head, arr) {
 	for (let i = 0; i < arr.length; i++) {
 		if (head.x == arr[i].x && head.y == arr[i].y) {
-			clearInterval(game);
+			life = false;
+			final(false)
 		}
 	}
-
-
 }
 
 function drawGame() {
@@ -84,7 +82,9 @@ function drawGame() {
 	}
 
 	if (snakeX < box || snakeX > box * 17 || snakeY < 3 * box || snakeY > box * 17) {
-		clearInterval(game);
+		life = false;
+		final(false)
+
 	}
 
 
@@ -104,6 +104,48 @@ function drawGame() {
 }
 
 let game = setInterval(drawGame, 100);
+
+function dead() {
+	alert("You Lose");
+	clearInterval(game);
+	location.reload();
+}
+
+async function final() {
+	await new Promise((resolve, reject) => {
+		var data = {
+			userName: userName,
+			score: score,
+		};
+		globalThis.data;
+		console.log(data);
+		resolve(data);
+	}).then((data) => {
+		const jsonData = JSON.stringify(data);
+		console.log(jsonData);
+		var xhr = new XMLHttpRequest();
+		console.log(xhr)
+		xhr.open("POST", "https://jsonplaceholder.typicode.com/posts", true);
+		xhr.setRequestHeader("Content-Type", "application/json");
+		console.log(xhr)
+		xhr.onload = function () {
+			if (xhr.status === 200) {
+				var response = JSON.parse(xhr.responseText);
+				console.log(response);
+			}
+		};
+		xhr.onerror = function () {
+			console.error("Ошибка отправки запроса");
+		};
+		xhr.send(jsonData);
+	}).then(() => {
+		dead()
+	})
+}
+
+
+
+
 
 
 
