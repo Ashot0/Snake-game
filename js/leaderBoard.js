@@ -1,6 +1,6 @@
 var xhr = new XMLHttpRequest();
 
-xhr.open("GET", "https://jsonplaceholder.typicode.com/users", true);
+xhr.open("GET", "https://648de73d2de8d0ea11e85d28.mockapi.io/users", true);
 
 
 
@@ -9,7 +9,7 @@ xhr.onload = function () {
 	if (xhr.status === 200) {
 		var responseData = JSON.parse(xhr.responseText);
 		responseData.sort(function (a, b) {
-			return b.name - a.name;  //score
+			return b.score - a.score;
 		});
 		// responseData.sort(function (a, b) {
 		// 	return a.name.localeCompare(b.name);
@@ -29,7 +29,7 @@ xhr.onload = function () {
 			var scoreElement = document.createElement("p");
 			scoreElement.classList.add("board__text");
 			scoreElement.classList.add("board__score");
-			scoreElement.textContent = item.id; //score
+			scoreElement.textContent = item.score;
 
 			div.appendChild(nameElement);
 			div.appendChild(scoreElement);

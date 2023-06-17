@@ -114,7 +114,7 @@ function dead() {
 async function final() {
 	await new Promise((resolve, reject) => {
 		var data = {
-			userName: userName,
+			name: userName,
 			score: score,
 		};
 		globalThis.data;
@@ -125,7 +125,9 @@ async function final() {
 		console.log(jsonData);
 		var xhr = new XMLHttpRequest();
 		console.log(xhr)
-		xhr.open("POST", "https://jsonplaceholder.typicode.com/posts", true);
+
+		xhr.open("POST", "https://648de73d2de8d0ea11e85d28.mockapi.io/users", true);
+
 		xhr.setRequestHeader("Content-Type", "application/json");
 		console.log(xhr)
 		xhr.onload = function () {
