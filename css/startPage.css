@@ -8,6 +8,7 @@ body {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	backgroung-color: #4A752C; 
 }
 
 .leader-board-box {
